@@ -16,7 +16,6 @@ public class Main {
         Comparator<Person> comparator = (o1, o2) -> {
             String[] text1 = o1.getSurname().split("\\P{IsAlphabetic}+");
             String[] text2 = o2.getSurname().split("\\P{IsAlphabetic}+");
-            System.out.println(text1.length + "  " + o1.getSurname() + "  " + text2.length + "  " + o2.getSurname());
             if (text1.length >= 10 & text2.length >= 10) {
                 return Integer.compare(o1.getAge(), o2.getAge());
             } else if (text1.length == text2.length) {
