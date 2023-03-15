@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,16 +13,22 @@ public class Main {
         people.add(new Person("Георгий", "Власов-Аспирант", 25));
         people.add(new Person("Максим", "Водолажский", 33));
         System.out.println(people);
-
-        Collections.sort(people, new PersonsSuNameLengthComparator(1));
-        System.out.println(" По возрасту -  " + people);
-
-        Collections.sort(people, new PersonsSuNameLengthComparator(2));
-        System.out.println(" Есть ограничение на количество фамилий -  " + people);
-
-        Collections.sort(people, new PersonsSuNameLengthComparator(3));
-        System.out.println(" По длине фамилии , потом по возрасту - " + people);
-
-
+        Comparator<Person> comparator = (o1, o2) -> {
+            String[] text1 = o1.getSurname().split("\\P{IsAlphabetic}+");
+            String[] text2 = o2.getSurname().split("\\P{IsAlphabetic}+");
+            System.out.println(text1.length + "  " + o1.getSurname() + "  " + text2.length + "  " + o2.getSurname());
+            if (text1.length >= 10 & text2.length >= 10) {
+                return Integer.compare(o1.getAge(), o2.getAge());
+            } else if (text1.length == text2.length) {
+                return Integer.compare(o1.getAge(), o2.getAge());
+            } else {
+                return Integer.compare(text1.length, text2.length);
+            }
+        };
+        Collections.sort(people, comparator);
+        System.out.println(people);
     }
+
 }
+
+
